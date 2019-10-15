@@ -3,19 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0"
   },
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-sh-react": "git+https://git@gitlab.smarthead.ru/frontend-public/eslint-config-sh-react.git",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "stylelint": "^10.1.0",
+    "stylelint-config-sh": "git+https://git@gitlab.smarthead.ru/frontend-public/stylelint-config-sh.git",
+    "stylelint-scss": "^3.10.1"
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3006 &&  react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "eslint --color --quiet ./src --ext .js",
+    "lint:css": "stylelint **/*.{scss,css}",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
+  "eslintIgnore": ["src/serviceWorker.js"],
   "browserslist": {
     "production": [
       ">0.2%",

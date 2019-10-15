@@ -1,0 +1,29 @@
+{
+    "extends": [
+        "react-app",
+        "eslint-config-sh-react"
+    ],
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "globals": {
+        "window": false
+    },
+    "rules": {
+        "import/no-unresolved": [
+            "error",
+            {
+                "commonjs": true,
+                "caseSensitive": true,
+                "ignore": [
+                    "^app\/",
+                    "^components\/",
+                    "^scss\/",
+                    "^img\/",
+                    "^utils\/"
+                ]
+            }]
+    }
+}
