@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
@@ -27,7 +28,9 @@
     "lint:css": "stylelint **/*.{scss,css}",
     "eject": "react-scripts eject"
   },
-  "eslintIgnore": ["src/serviceWorker.js"],
+  "eslintIgnore": [
+    "src/serviceWorker.js"
+  ],
   "browserslist": {
     "production": [
       ">0.2%",
