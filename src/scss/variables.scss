@@ -1,0 +1,86 @@
+// Colors
+//---------------------------------
+
+$color-red:                     #d73636 !default;
+$color-pink:                    #e91e63 !default;
+$color-purple:                  #9c27b0 !default;
+$color-indigo:                  #3f51b5 !default;
+$color-blue:                    #0028ec !default;
+$color-green:                   #5ab031 !default;
+$color-yellow:                  #ffc107 !default;
+$color-orange:                  #ff9800 !default;
+$color-brown:                   #795548 !default;
+$color-grey:                    #c7c7c7 !default;
+
+$color-black:                   #000 !default;
+$color-white:                   #fff !default;
+
+// Color types
+//---------------------------------
+
+$color-default:                 $color-black !default;
+$color-primary:                 $color-purple !default;
+$color-success:                 $color-green !default;
+$color-info:                    $color-blue !default;
+$color-important:               $color-yellow !default;
+$color-warning:                 $color-orange !default;
+$color-danger:                  $color-red !default;
+$color-disabled:                $color-grey !default;
+
+// Spacer
+//---------------------------------
+
+$spacer:                        10px !default;
+$spacer--2x:                    $spacer * 2 !default;
+
+// Screen
+//---------------------------------
+
+$screen-w--xs:                  320px !default;
+$screen-w--md:                  768px !default;
+$screen-w--lg:                  1025px !default;
+$screen-w--xl:                  1200px !default;
+$screen-w--2xl:                 1366px !default;
+$screen-w--3xl:                 1600px !default;
+$screen-w--4xl:                 1920px !default;
+
+$screen-w--sm-max:              $screen-w--md - 0.02px !default;
+$screen-w--md-max:              $screen-w--lg - 0.02px !default;
+$screen-w--lg-max:              $screen-w--xl - 0.02px !default;
+$screen-w--xl-max:              $screen-w--2xl - 0.02px !default;
+$screen-w--2xl-max:             $screen-w--3xl - 0.02px !default;
+$screen-w--3xl-max:             $screen-w--4xl - 0.02px !default;
+
+// Typography
+//---------------------------------
+
+$font-family--sansSerif:        Arial, sans-serif !default;
+$font-family--serif:            Georgia, "Times New Roman", Times, serif !default;
+$font-family--monospace:        Monaco, Menlo, Consolas, "Courier New", monospace !default;
+
+$font-family--base:             $font-family--sansSerif !default;
+
+$font-size--s:                  12px !default;
+$font-size--m:                  14px !default;
+$font-size--l:                  22px !default;
+
+$line-height--s:                15px !default;
+$line-height--m:                24px !default;
+$line-height--l:                32px !default;
+
+$font-color:                    $color-black !default;
+$link-color:                    $color-black !default;
+$heading-color:                 $color-black !default;
+
+// Background
+//---------------------------------
+
+$bg-main:                       $color-white !default;
+
+// Z-index
+//---------------------------------
+
+$zindex-overlay:                1000 !default;
+$zindex-sidebar:                2000 !default;
+$zindex-header:                 3000 !default;
+$zindex-modal:                  4000 !default;
