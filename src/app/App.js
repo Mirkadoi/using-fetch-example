@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.scss';
-import HelloWorld from '../components/HelloWorld';
+import UserProfile from '../components/UserProfile';
 
-const App = () => (
-    <div className="App">
-        <HelloWorld />
-    </div>
-);
+class App extends Component {
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            // showAuth: true,
+        };
+    }
+
+    componentWillMount() {
+
+    }
+
+    componentDidMount() {
+
+    }
+
+    render() {
+        return (
+            <div className="App">
+
+                {/* showAuth && */}
+
+                <UserProfile />
+            </div>
+        );
+    }
+}
 export default App;

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const HelloWorld = () => (
+const UserProfile = () => (
     <div>
         Всем привет.
     </div>
 );
 
-export default HelloWorld;
+export default UserProfile;
