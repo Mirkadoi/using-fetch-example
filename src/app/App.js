@@ -8,19 +8,20 @@ class App extends Component {
         super(props);
 
         this.state = {
-            // showAuth: true,
+            userData: null,
+            userToken: null,
         };
     }
 
-    // setShowAuth = () => {
-    //     this.setState({ showAuth: false });
-    // };
+    setState = (state, value) => {
+        this.setState({ [state]: value });
+    };
 
     render() {
         // const { showAuth } = this.state;
         return (
             <div className="App">
-                <Routers />
+                <Routers setState={this.setState} />
             </div>
         );
     }

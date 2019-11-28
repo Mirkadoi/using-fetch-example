@@ -8,16 +8,23 @@ import Home from './page/Home';
 import Authorization from './page/Authorization';
 import UserProfile from './page/UserProfile';
 
-const Routers = () => (
-    <Router>
-        <div>
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route path="/auth" component={Authorization} />
-                <Route path="/user" component={UserProfile} />
-            </Switch>
-        </div>
-    </Router>
-);
+const Routers = (props) => {
+    const { setState } = props;
+    return (
+        <Router>
+            <div>
+                <Switch>
+                    <Route exact path="/">
+                        <Home setState={setState} />
+                    </Route>
+                    {/*<Route path="/auth" component={Authorization} />*/}
+                    <Route path="/user">
+                        <UserProfile setState={setState} />
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
+    );
+}
 
 export default Routers;
