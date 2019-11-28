@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import './App.scss';
-import UserProfile from '../components/UserProfile';
+import Routers from '../routers';
+
 
 class App extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            showAuth: true,
+            // showAuth: true,
         };
     }
 
-    setShowAuth = () => {
-        this.setState({ showAuth: false });
-    };
+    // setShowAuth = () => {
+    //     this.setState({ showAuth: false });
+    // };
 
     render() {
-        const { showAuth } = this.state;
+        // const { showAuth } = this.state;
         return (
             <div className="App">
-                { !showAuth && <UserProfile /> }
+                <Routers />
             </div>
         );
     }
