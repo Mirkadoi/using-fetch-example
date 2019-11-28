@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.scss';
-import AuthWindow from '../components/AuthWindow';
 import UserProfile from '../components/UserProfile';
 
 class App extends Component {
@@ -12,10 +11,6 @@ class App extends Component {
         };
     }
 
-    componentDidMount() {
-
-    }
-
     setShowAuth = () => {
         this.setState({ showAuth: false });
     };
@@ -24,7 +19,6 @@ class App extends Component {
         const { showAuth } = this.state;
         return (
             <div className="App">
-                <AuthWindow show={showAuth} onHide={this.setShowAuth} backdrop="static" />
                 { !showAuth && <UserProfile /> }
             </div>
         );
