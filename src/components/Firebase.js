@@ -61,13 +61,13 @@ class Firebase extends Component {
         this.unregisterAuthObserver = app.auth().onAuthStateChanged(
             (user) => {
                 if (!user) return;
-                setStateApp('userData', user);
                 this.firestoreInit
                     .collection('users')
                     .doc(`${user.uid}`)
                     .get()
                     .then((db) => {
                         setStateApp('userToken', db.data().token);
+                        setStateApp('userData', user.providerData[0]);
                         this.handelSignedIn(true);
                     });
             },

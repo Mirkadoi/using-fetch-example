@@ -24,6 +24,7 @@
                     "^img\/",
                     "^utils\/"
                 ]
-            }]
+            }],
+        "react/jsx-props-no-spreading": "off"
     }
 }

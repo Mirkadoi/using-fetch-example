@@ -21,14 +21,16 @@ class App extends Component {
 
     render() {
         const { userData, userToken } = this.state;
-        console.log(userData, userToken);
 
         return (
             <div className={styles.app}>
                 <Router>
                     <div>
                         <Header setStateApp={this.setStateApp} />
-                        <Routers />
+                        <Routers
+                            userData={userData}
+                            userToken={userToken}
+                        />
                     </div>
                 </Router>
             </div>
