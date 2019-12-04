@@ -19,12 +19,20 @@ const Routers = (props) => {
                     </Route>
                     {/*<Route path="/auth" component={Authorization} />*/}
                     <Route path="/user">
-                        <UserProfile setState={setState} />
+                        <UserProfile setState={setStateApp} />
                     </Route>
                 </Switch>
             </div>
         </Router>
     );
-}
+};
+
+Routers.defaultProps = {
+    setStateApp: () => {},
+};
+
+Routers.propTypes = {
+    setStateApp: PropTypes.func,
+};
 
 export default Routers;

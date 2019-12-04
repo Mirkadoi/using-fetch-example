@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.scss';
+// import PropTypes from 'prop-types';
 import Routers from '../routers';
 
 
@@ -18,12 +19,19 @@ class App extends Component {
     };
 
     render() {
-        // const { showAuth } = this.state;
+        const { userData, userToken } = this.state;
+        console.log(userData, userToken);
+
         return (
             <div className="App">
-                <Routers setState={this.setState} />
+                <Routers setStateApp={this.setStateApp} />
             </div>
         );
     }
 }
+
+// App.propTypes = {
+//     userData: PropTypes.func.isRequired,
+// };
+
 export default App;
