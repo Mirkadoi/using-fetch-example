@@ -4,6 +4,8 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import PropTypes from 'prop-types';
 import 'firebase/auth';
 import 'firebase/firestore';
+import { withRouter } from 'react-router-dom';
+
 
 const config = {
     apiKey: 'AIzaSyClnpYWbOSej7TSW7UTd9Xa1FNlbFtdS6A',
@@ -45,7 +47,7 @@ class Firebase extends Component {
                     setStateApp('userToken', token);
                     setStateApp('userData', data);
                     this.addTokenInBase(token, id);
-                    return false;
+                    return true;
                 },
             },
         };
@@ -89,19 +91,21 @@ class Firebase extends Component {
 
     render() {
         const { isSignedIn } = this.state;
-        return (
+        const { history: { push: logout } } = this.props;
 
+        return (
             isSignedIn
                 ? (
                     <div>
-                        <h1>My App</h1>
-                        <p>Welcome { app.auth().currentUser.displayName }! You are now signed-in!</p>
                         <button
                             type="button"
-                            onClick={async () => {
-                                await app.auth().signOut();
-                                this.handelSignedIn(false);
-                            }}
+                            onClick={() => app
+                                .auth()
+                                .signOut()
+                                .then(() => {
+                                    this.handelSignedIn(false);
+                                    logout('/');
+                                })}
                         >
                             Sign-out
                         </button>
@@ -121,10 +125,13 @@ class Firebase extends Component {
 
 Firebase.defaultProps = {
     setStateApp: () => {},
+    push: () => {},
 };
 
 Firebase.propTypes = {
+    history: PropTypes.shape().isRequired,
+    push: PropTypes.func,
     setStateApp: PropTypes.func,
 };
 
-export default Firebase;
+export default withRouter(Firebase);

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import './App.scss';
 // import PropTypes from 'prop-types';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Routers from '../routers';
+import Firebase from '../components/Firebase';
+import styles from './App.module.scss';
 
 
 class App extends Component {
@@ -23,8 +25,16 @@ class App extends Component {
         console.log(userData, userToken);
 
         return (
-            <div className="App">
-                <Routers setStateApp={this.setStateApp} />
+            <div className={styles.app}>
+                <Router>
+                    <div>
+                        <div className={styles.auth}>
+                            <p>Авторизация:</p>
+                            <Firebase setStateApp={this.setStateApp} />
+                        </div>
+                        <Routers setStateApp={this.setStateApp} />
+                    </div>
+                </Router>
             </div>
         );
     }

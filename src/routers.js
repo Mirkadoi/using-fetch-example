@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
 } from 'react-router-dom';
@@ -13,22 +12,19 @@ const Routers = (props) => {
     const { setStateApp } = props;
 
     return (
-        <Router>
-            <div>
-                <Switch>
-                    <Route exact path="/" render={() => <Home setState={setStateApp} />} />
-                    {/* <Route path="/auth" component={Authorization} /> */}
-                    <Route path="/user">
-                        <UserProfile setState={setStateApp} />
-                    </Route>
-                </Switch>
-            </div>
-        </Router>
+        <Switch>
+            <Route exact path="/" render={() => <Home setState={setStateApp} />} />
+            {/* <Route path="/auth" component={Authorization} /> */}
+            <Route path="/user">
+                <UserProfile setState={setStateApp} />
+            </Route>
+        </Switch>
     );
 };
 
 Routers.defaultProps = {
-    setStateApp: () => {},
+    setStateApp: () => {
+    },
 };
 
 Routers.propTypes = {

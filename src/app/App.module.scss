@@ -1,8 +1,15 @@
-.App {
+.app {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
+}
+
+.auth {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    text-align: center;
 }
