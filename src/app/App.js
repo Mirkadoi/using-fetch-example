@@ -14,7 +14,7 @@ class App extends Component {
         };
     }
 
-    setState = (state, value) => {
+    setStateApp = (state, value) => {
         this.setState({ [state]: value });
     };
 

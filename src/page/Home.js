@@ -7,7 +7,7 @@ const Home = ({ setStateApp }) => (
     <div className={styles.container}>
         <p>Главная страница</p>
         <p>Авторизация:</p>
-        <Firebase setState={setState} />
+        <Firebase setStateApp={setStateApp} />
     </div>
 );
 

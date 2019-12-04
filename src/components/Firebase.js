@@ -1,42 +1,130 @@
-import React from 'react';
-import firebase from 'firebase';
+import React, { Component } from 'react';
+import app from 'firebase/app';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import PropTypes from 'prop-types';
+import 'firebase/auth';
+import 'firebase/firestore';
 
-const Firebase = ({ setState }) => {
-    const config = {
-        apiKey: 'AIzaSyClnpYWbOSej7TSW7UTd9Xa1FNlbFtdS6A',
-        authDomain: 'github-api-auth.firebaseapp.com',
+const config = {
+    apiKey: 'AIzaSyClnpYWbOSej7TSW7UTd9Xa1FNlbFtdS6A',
+    authDomain: 'github-api-auth.firebaseapp.com',
+    projectId: 'github-api-auth',
+};
+
+class Firebase extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isSignedIn: false,
+        };
+
+        this.appCoreInit = app.initializeApp(config);
+        this.firestoreInit = this.appCoreInit.firestore();
+        this.uiConfig = {
+            signInFlow: 'popup',
+            signInSuccessUrl: '/user',
+            signInOptions: [
+                {
+                    provider: app.auth.GithubAuthProvider.PROVIDER_ID,
+                    scopes: [
+                        'user',
+                        'public_repo',
+                        'delete_repo',
+                    ],
+                },
+            ],
+
+            callbacks: {
+                signInSuccessWithAuthResult: (authResult) => {
+                    const { setStateApp } = props;
+
+                    const token = authResult.credential.accessToken;
+                    const data = authResult.user.providerData[0];
+                    const id = authResult.user.uid;
+                    setStateApp('userToken', token);
+                    setStateApp('userData', data);
+                    this.addTokenInBase(token, id);
+                    return false;
+                },
+            },
+        };
+    }
+
+    componentDidMount() {
+        const { setStateApp } = this.props;
+
+        this.unregisterAuthObserver = app.auth().onAuthStateChanged(
+            (user) => {
+                if (!user) return;
+                setStateApp('userData', user);
+                this.firestoreInit
+                    .collection('users')
+                    .doc(`${user.uid}`)
+                    .get()
+                    .then((db) => {
+                        setStateApp('userToken', db.data().token);
+                        this.handelSignedIn(true);
+                    });
+            },
+        );
+    }
+
+    componentWillUnmount() {
+        this.unregisterAuthObserver();
+    }
+
+    handelSignedIn = (value) => {
+        this.setState({ isSignedIn: value });
+        localStorage.setItem('isSignedIn', `${value}`);
     };
 
-    firebase.initializeApp(config);
+    addTokenInBase = (token, id) => this.firestoreInit
+        .collection('users')
+        .doc(`${id}`)
+        .set({
+            name: `Tecт${Math.random()}`,
+            token: `${token}`,
+        });
 
-    const uiConfig = {
-        signInFlow: 'popup',
-        signInSuccessUrl: '/user',
-        signInOptions: [
-            {
-                provider: firebase.auth.GithubAuthProvider.PROVIDER_ID,
-                scopes: [
-                    'user',
-                    'public_repo',
-                    'delete_repo',
-                ],
-            },
-        ],
+    render() {
+        const { isSignedIn } = this.state;
+        return (
 
-        callbacks: {
-            signInSuccessWithAuthResult: (authResult) => {
-                setState('userData', authResult);
-                return true;
-            },
-        },
-    };
+            isSignedIn
+                ? (
+                    <div>
+                        <h1>My App</h1>
+                        <p>Welcome { app.auth().currentUser.displayName }! You are now signed-in!</p>
+                        <button
+                            type="button"
+                            onClick={async () => {
+                                await app.auth().signOut();
+                                this.handelSignedIn(false);
+                            }}
+                        >
+                            Sign-out
+                        </button>
+                    </div>
+                )
+                : (
+                    <div>
+                        <StyledFirebaseAuth
+                            uiConfig={this.uiConfig}
+                            firebaseAuth={app.auth()}
+                        />
+                    </div>
+                )
+        );
+    }
+}
 
-    return (
-        <div>
-            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-        </div>
-    );
+Firebase.defaultProps = {
+    setStateApp: () => {},
+};
+
+Firebase.propTypes = {
+    setStateApp: PropTypes.func,
 };
 
 export default Firebase;
