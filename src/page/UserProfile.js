@@ -2,7 +2,7 @@ import React from 'react';
 
 const UserProfile = () => (
     <div>
-        Всем привет.
+        <p>Всем привет.</p>
     </div>
 );
 

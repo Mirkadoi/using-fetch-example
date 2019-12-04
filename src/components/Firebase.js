@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import app from 'firebase/app';
+import { Button } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import PropTypes from 'prop-types';
 import 'firebase/auth';
 import 'firebase/firestore';
-import { withRouter } from 'react-router-dom';
-
+import styles from './Firebase.module.scss';
+import Authorization from './Authorization';
 
 const config = {
     apiKey: 'AIzaSyClnpYWbOSej7TSW7UTd9Xa1FNlbFtdS6A',
@@ -96,20 +98,38 @@ class Firebase extends Component {
         return (
             isSignedIn
                 ? (
-                    <div>
-                        <button
-                            type="button"
-                            onClick={() => app
-                                .auth()
-                                .signOut()
-                                .then(() => {
-                                    this.handelSignedIn(false);
-                                    logout('/');
-                                })}
-                        >
-                            Sign-out
-                        </button>
-                    </div>
+                    <>
+                        <Authorization>
+                            <Button
+                                className={styles.button}
+                                variant="dark"
+                                onClick={() => logout('/')}
+                            >
+                                Главная
+                            </Button>
+                            <Button
+                                className={styles.button}
+                                variant="dark"
+                                onClick={() => logout('/user')}
+                            >
+                                Пользователь
+                            </Button>
+                            <Button
+                                className={styles.button}
+                                variant="dark"
+                                onClick={() => app
+                                    .auth()
+                                    .signOut()
+                                    .then(() => {
+                                        this.handelSignedIn(false);
+                                        logout('/');
+                                    })}
+                            >
+                                Выход
+                            </Button>
+                        </Authorization>
+
+                    </>
                 )
                 : (
                     <div>

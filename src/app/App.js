@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
 import { BrowserRouter as Router } from 'react-router-dom';
+import Header from '../components/Header';
 import Routers from '../routers';
-import Firebase from '../components/Firebase';
 import styles from './App.module.scss';
 
 
@@ -28,20 +27,13 @@ class App extends Component {
             <div className={styles.app}>
                 <Router>
                     <div>
-                        <div className={styles.auth}>
-                            <p>Авторизация:</p>
-                            <Firebase setStateApp={this.setStateApp} />
-                        </div>
-                        <Routers setStateApp={this.setStateApp} />
+                        <Header setStateApp={this.setStateApp} />
+                        <Routers />
                     </div>
                 </Router>
             </div>
         );
     }
 }
-
-// App.propTypes = {
-//     userData: PropTypes.func.isRequired,
-// };
 
 export default App;
