@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FormInput from '../components/FormInput';
 import styles from './UserProfile.module.scss';
+
 
 const UserProfile = (props) => {
     const {
@@ -8,7 +10,7 @@ const UserProfile = (props) => {
         userToken,
     } = props;
 
-    const writeText = () => {
+    const renderUserInfo = () => {
         const {
             displayName,
             photoURL,
@@ -19,8 +21,6 @@ const UserProfile = (props) => {
             name = 'Безымянный';
         } else name = displayName;
 
-        console.log(userToken);
-
         return (
             <div className={styles.profile}>
                 <p>Приветствую {name}!</p>
@@ -29,13 +29,34 @@ const UserProfile = (props) => {
         );
     };
 
+    const renderUserInterface = () => {
+        const params = {
+            urlParam: '/user',
+            method: 'PATCH',
+            token: `${userToken}`,
+        };
+        return (
+            <div className={styles.interface}>
+                <FormInput
+                    title="Сменить имя пользователя"
+                    requestData={params}
+                />
+            </div>
+        );
+    };
+
     return (
         <>
             {
                 userData !== null
-                    ? writeText()
+                    ? (
+                        <div className={styles.user}>
+                            {renderUserInfo()}
+                            {renderUserInterface()}
+                        </div>
+                    )
                     : (
-                        <div>
+                        <div className={styles.fail}>
                             404 - такого пользователя нет
                         </div>
                     )
@@ -53,7 +74,7 @@ UserProfile.defaultProps = {
 };
 
 UserProfile.propTypes = {
-    userData: PropTypes.objectOf({
+    userData: PropTypes.shape({
         displayName: PropTypes.string,
         photoURL: PropTypes.string,
     }),

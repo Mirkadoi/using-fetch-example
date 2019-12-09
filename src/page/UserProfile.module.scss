@@ -1,11 +1,29 @@
 @import "scss/variables";
 
+.user {
+    width: 100%;
+}
+
+.fail {
+    margin: auto;
+}
+
 .profile {
-    position: absolute;
+    position: relative;
     left: 10px;
     top: 0;
 }
 
 .avatar {
-    width: 30%;
+    width: 138px;
+}
+
+.interface {
+    display: flex;
+    flex-direction: row;
+    border: 2px solid $color-black;
+    border-radius: 5px;
+    min-height: 70vh;
+    margin: 10px;
+    padding: 5px;
 }
