@@ -9,12 +9,6 @@ import 'firebase/firestore';
 import styles from './Firebase.module.scss';
 import Authorization from './Authorization';
 
-const config = {
-    apiKey: 'AIzaSyClnpYWbOSej7TSW7UTd9Xa1FNlbFtdS6A',
-    authDomain: 'github-api-auth.firebaseapp.com',
-    projectId: 'github-api-auth',
-};
-
 class Firebase extends Component {
     constructor(props) {
         super(props);
@@ -23,8 +17,7 @@ class Firebase extends Component {
             isSignedIn: false,
         };
 
-        this.appCoreInit = app.initializeApp(config);
-        this.firestoreInit = this.appCoreInit.firestore();
+        this.firestoreInit = props.appCoreInit.firestore();
         this.uiConfig = {
             signInFlow: 'popup',
             signInSuccessUrl: '/user',
@@ -41,14 +34,11 @@ class Firebase extends Component {
 
             callbacks: {
                 signInSuccessWithAuthResult: (authResult) => {
-                    const { setStateApp } = props;
-
                     const token = authResult.credential.accessToken;
                     const data = authResult.user.providerData[0];
                     const id = authResult.user.uid;
-                    setStateApp('userToken', token);
-                    setStateApp('userData', data);
-                    this.addTokenInBase(token, id);
+                    const dataForBase = { data: { ...data }, token };
+                    this.addTokenInBase(dataForBase, id);
                     return true;
                 },
             },
@@ -57,17 +47,16 @@ class Firebase extends Component {
 
     componentDidMount() {
         const { setStateApp } = this.props;
-
         this.unregisterAuthObserver = app.auth().onAuthStateChanged(
             (user) => {
                 if (!user) return;
-                setStateApp('userData', user);
                 this.firestoreInit
                     .collection('users')
                     .doc(`${user.uid}`)
                     .get()
                     .then((db) => {
                         setStateApp('userToken', db.data().token);
+                        setStateApp('userData', db.data().data);
                         this.handelSignedIn(true);
                     });
             },
@@ -83,13 +72,10 @@ class Firebase extends Component {
         localStorage.setItem('isSignedIn', `${value}`);
     };
 
-    addTokenInBase = (token, id) => this.firestoreInit
+    addTokenInBase = (data, token, id) => this.firestoreInit
         .collection('users')
         .doc(`${id}`)
-        .set({
-            name: `Tecт${Math.random()}`,
-            token: `${token}`,
-        });
+        .set(data);
 
     render() {
         const { isSignedIn } = this.state;
@@ -144,14 +130,17 @@ class Firebase extends Component {
 }
 
 Firebase.defaultProps = {
-    setStateApp: () => {},
-    push: () => {},
+    setStateApp: () => {
+    },
+    push: () => {
+    },
 };
 
 Firebase.propTypes = {
     history: PropTypes.shape().isRequired,
     push: PropTypes.func,
     setStateApp: PropTypes.func,
+    appCoreInit: PropTypes.shape().isRequired,
 };
 
 export default withRouter(Firebase);

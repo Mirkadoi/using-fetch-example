@@ -6,10 +6,18 @@ import {
 import Home from './page/Home';
 import UserProfile from './page/UserProfile';
 
-const Routers = () => (
+const Routers = (props) => (
     <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/user" component={UserProfile} />
+        <Route
+            exact
+            path="/"
+            render={() => <Home />}
+        />
+        <Route
+            exact
+            path="/user"
+            render={() => <UserProfile {...props} />}
+        />
     </Switch>
 );
 

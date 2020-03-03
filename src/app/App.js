@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import app from 'firebase/app';
 import Header from '../components/Header';
 import Routers from '../routers';
 import styles from './App.module.scss';
+import ContextStore from '../components/ContextStore';
 
+const config = {
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+};
 
 class App extends Component {
     constructor(props) {
@@ -12,6 +19,7 @@ class App extends Component {
         this.state = {
             userData: null,
             userToken: null,
+            appCoreInit: app.initializeApp(config),
         };
     }
 
@@ -20,18 +28,24 @@ class App extends Component {
     };
 
     render() {
-        const { userData, userToken } = this.state;
-        console.log(userData, userToken);
+        const { userData, userToken, appCoreInit } = this.state;
 
         return (
-            <div className={styles.app}>
-                <Router>
-                    <div>
-                        <Header setStateApp={this.setStateApp} />
-                        <Routers />
-                    </div>
-                </Router>
-            </div>
+            <ContextStore.Provider
+                value={{
+                    appCoreInit,
+                }}
+            >
+                <div className={styles.app}>
+                    <Router>
+                        <Header setStateApp={this.setStateApp} appCoreInit={appCoreInit} />
+                        <Routers
+                            userData={userData}
+                            userToken={userToken}
+                        />
+                    </Router>
+                </div>
+            </ContextStore.Provider>
         );
     }
 }
