@@ -4,6 +4,7 @@ import app from 'firebase/app';
 import Header from '../components/Header';
 import Routers from '../routers';
 import styles from './App.module.scss';
+import ContextStore from '../components/ContextStore';
 
 const config = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -30,15 +31,21 @@ class App extends Component {
         const { userData, userToken, appCoreInit } = this.state;
 
         return (
-            <div className={styles.app}>
-                <Router>
-                    <Header setStateApp={this.setStateApp} appCoreInit={appCoreInit} />
-                    <Routers
-                        userData={userData}
-                        userToken={userToken}
-                    />
-                </Router>
-            </div>
+            <ContextStore.Provider
+                value={{
+                    appCoreInit,
+                }}
+            >
+                <div className={styles.app}>
+                    <Router>
+                        <Header setStateApp={this.setStateApp} appCoreInit={appCoreInit} />
+                        <Routers
+                            userData={userData}
+                            userToken={userToken}
+                        />
+                    </Router>
+                </div>
+            </ContextStore.Provider>
         );
     }
 }

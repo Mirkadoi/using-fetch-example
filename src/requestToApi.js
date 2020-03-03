@@ -12,11 +12,10 @@ const RequestToApi = async (params) => {
             'Content-Type': 'application/json',
             Authorization: `token ${token}`,
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify(body) || null,
     });
 
-    const result = await response.json();
-    return result;
+    return response.json();
 };
 
 export default RequestToApi;

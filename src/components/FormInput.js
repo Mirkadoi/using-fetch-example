@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import RequestToApi from '../requestToApi';
-import updateDataBase from '../utils/updateDataBase';
 
 const FormInput = (props) => {
     const {
@@ -19,8 +18,9 @@ const FormInput = (props) => {
         if (value === '') return alert('Давай хоть пару букв');
 
         const body = { [name]: value };
-        RequestToApi({ ...requestData, body }).then(() => alert('Имя успешно изменено'));
-        return updateDataBase();
+        return RequestToApi({ ...requestData, body })
+            .then(() => Promise.resolve(alert('Имя успешно изменено. Для изменения имени по АПИ нужно время. Новое имя будет через 60сек.')))
+            .then(() => setTimeout(() => window.location.reload(), 60000));
     };
 
     return (

@@ -1,40 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormInput from '../components/FormInput';
 import styles from './UserProfile.module.scss';
+import RequestToApi from '../requestToApi';
 
 
 const UserProfile = (props) => {
+    const [userName, setName] = useState('Друг');
     const {
         userData,
         userToken,
     } = props;
 
+    let params = {
+        urlParam: '/user',
+        token: `${userToken}`,
+    };
+
     const renderUserInfo = () => {
+        params = { ...params, method: 'GET' };
         const {
-            displayName,
             photoURL,
         } = userData;
-        let name;
 
-        if (displayName === null) {
-            name = 'Безымянный';
-        } else name = displayName;
+        if (userToken) {
+            RequestToApi(params).then(({ name }) => {
+                setName(name);
+            });
+        }
 
         return (
             <div className={styles.profile}>
-                <p>Приветствую {name}!</p>
+                <p>Приветствую { userName }!</p>
                 <img className={styles.avatar} src={photoURL} alt="Avatar" />
             </div>
         );
     };
 
     const renderUserInterface = () => {
-        const params = {
-            urlParam: '/user',
-            method: 'PATCH',
-            token: `${userToken}`,
-        };
+        params = { ...params, method: 'PATCH' };
         return (
             <div className={styles.interface}>
                 <FormInput
