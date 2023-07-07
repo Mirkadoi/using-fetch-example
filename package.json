@@ -21,7 +21,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
-    "stylelint": "^10.1.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-sh": "git+https://git@gitlab.smarthead.ru/frontend-public/stylelint-config-sh.git",
     "stylelint-scss": "^3.10.1"
   },
